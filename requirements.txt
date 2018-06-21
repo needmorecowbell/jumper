@@ -1,0 +1,2 @@
+paramiko==2.4.0
+python_digitalocean==1.13.2
