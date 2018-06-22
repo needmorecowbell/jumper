@@ -1,11 +1,14 @@
 import time
 import digitalocean
-import config as conf
 from digitalocean import SSHKey
 import paramiko
 import os
 
-
+debug=False
+if(debug):
+    import configdebug as conf
+else:
+    import config as conf
 def connectToDroplet(ip, port):
     #SSH into droplet
     ssh = paramiko.SSHClient()

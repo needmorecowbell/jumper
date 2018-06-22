@@ -29,8 +29,11 @@ MANIFEST
 keys/*.pub
 keys/digitaloceanKey
 
+#Custom payloads
+payload/payload.py
+
 #debug
-config-debug.py
+configdebug.py
 # Installer logs
 pip-log.txt
 
