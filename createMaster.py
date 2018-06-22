@@ -25,7 +25,7 @@ def connectToDroplet(ip, port):
     try:
         print("[-] Retrieving installMaster.sh")
 
-        stdin, stdout, stderr = ssh.exec_command('wget https://raw.githubusercontent.com/needmorecowbell/jumper/master/installMaster.sh')
+        stdin, stdout, stderr = ssh.exec_command('wget https://raw.githubusercontent.com/needmorecowbell/jumper/master/master/installMaster.sh')
         time.sleep(5)
         print("[-] Executing installMaster.sh")
 

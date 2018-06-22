@@ -6,4 +6,3 @@ digital_ocean = {
         'masterName':'master-box'
         }
 
-
