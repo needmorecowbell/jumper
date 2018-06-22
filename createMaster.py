@@ -4,21 +4,33 @@ from digitalocean import SSHKey
 import paramiko
 import os
 
-debug=False
+debug=True
 if(debug):
     import configdebug as conf
 else:
     import config as conf
+
+
+
+
+
 def connectToDroplet(ip, port):
-    #SSH into droplet
+    '''
+    Uses paramiko to ssh into newly created droplet, given an ip and port.
+    Once a connection is made, the retrieves and executes the install.sh script.
+    '''
+
+
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
     fails=0
     connected = False
-    while (fails < 5 and not connected):
+    maxAttempts= 7
+    while (fails < maxAttempts and not connected):
         try:
             print("[-] Attempting SSH Connection")
-            ssh.connect(str(ip), username='root', key_filename='keys/digitaloceanKey')
+            ssh.connect(str(ip), username='root', key_filename=conf.digital_ocean['ssh-key-priv'])
             connected=True
             print("[+] SSH Connection Made")
         except Exception as e:
@@ -26,11 +38,11 @@ def connectToDroplet(ip, port):
             print("[!] "+str(e))
             time.sleep(3)
     try:
-        print("[-] Retrieving installMaster.sh")
+        print("[-] Retrieving master installation script")
 
-        stdin, stdout, stderr = ssh.exec_command('wget https://raw.githubusercontent.com/needmorecowbell/jumper/master/master/installMaster.sh')
+        stdin, stdout, stderr = ssh.exec_command('wget -O installMaster.sh '+conf.digital_ocean['installer-url'])
         time.sleep(5)
-        print("[-] Executing installMaster.sh")
+        print("[-] Executing retrieved script")
 
         stdin, stdout, stderr = ssh.exec_command('sh installMaster.sh')
         print("[+] Commands Executed")
