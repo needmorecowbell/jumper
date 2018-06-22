@@ -4,7 +4,7 @@ from digitalocean import SSHKey
 import paramiko
 import os
 
-debug=True
+debug=False
 if(debug):
     import configdebug as conf
 else:
